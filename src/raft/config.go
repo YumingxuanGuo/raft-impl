@@ -582,6 +582,7 @@ func (cfg *config) one(cmd interface{}, expectedServers int, retry bool) int {
 			}
 		}
 
+		// fmt.Printf("index: %d\n", index)
 		if index != -1 {
 			// somebody claimed to be the leader and to have
 			// submitted our command; wait a while for agreement.
@@ -590,6 +591,7 @@ func (cfg *config) one(cmd interface{}, expectedServers int, retry bool) int {
 				nd, cmd1 := cfg.nCommitted(index)
 				if nd > 0 && nd >= expectedServers {
 					// committed
+					// fmt.Printf("%d\n", cmd1)
 					if cmd1 == cmd {
 						// and it was the command we submitted.
 						return index

@@ -88,24 +88,24 @@ type TaskQueue struct {
 	mutex sync.Mutex
 	cond  *sync.Cond
 
-	tasks []Task
+	tasks []ApplyMsg
 }
 
 func (tq *TaskQueue) InitializeTaskQueue() {
 	tq.mutex.Lock()
-	tq.tasks = make([]Task, 0)
+	tq.tasks = make([]ApplyMsg, 0)
 	tq.cond = sync.NewCond(&tq.mutex)
 	tq.mutex.Unlock()
 }
 
-func (tq *TaskQueue) push(task Task) {
+func (tq *TaskQueue) push(task ApplyMsg) {
 	tq.mutex.Lock()
 	tq.tasks = append(tq.tasks, task)
 	tq.cond.Signal()
 	tq.mutex.Unlock()
 }
 
-func (tq *TaskQueue) pop() Task {
+func (tq *TaskQueue) pop() ApplyMsg {
 	tq.mutex.Lock()
 	for len(tq.tasks) == 0 {
 		tq.cond.Wait()

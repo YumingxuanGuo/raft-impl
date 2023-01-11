@@ -694,28 +694,28 @@ func TestPersist12C(t *testing.T) {
 
 	cfg.one(12, servers, true)
 
-	// leader1 := cfg.checkOneLeader()
-	// cfg.disconnect(leader1)
-	// cfg.start1(leader1, cfg.applier)
-	// cfg.connect(leader1)
+	leader1 := cfg.checkOneLeader()
+	cfg.disconnect(leader1)
+	cfg.start1(leader1, cfg.applier)
+	cfg.connect(leader1)
 
-	// cfg.one(13, servers, true)
+	cfg.one(13, servers, true)
 
-	// leader2 := cfg.checkOneLeader()
-	// cfg.disconnect(leader2)
-	// cfg.one(14, servers-1, true)
-	// cfg.start1(leader2, cfg.applier)
-	// cfg.connect(leader2)
+	leader2 := cfg.checkOneLeader()
+	cfg.disconnect(leader2)
+	cfg.one(14, servers-1, true)
+	cfg.start1(leader2, cfg.applier)
+	cfg.connect(leader2)
 
-	// cfg.wait(4, servers, -1) // wait for leader2 to join before killing i3
+	cfg.wait(4, servers, -1) // wait for leader2 to join before killing i3
 
-	// i3 := (cfg.checkOneLeader() + 1) % servers
-	// cfg.disconnect(i3)
-	// cfg.one(15, servers-1, true)
-	// cfg.start1(i3, cfg.applier)
-	// cfg.connect(i3)
+	i3 := (cfg.checkOneLeader() + 1) % servers
+	cfg.disconnect(i3)
+	cfg.one(15, servers-1, true)
+	cfg.start1(i3, cfg.applier)
+	cfg.connect(i3)
 
-	// cfg.one(16, servers, true)
+	cfg.one(16, servers, true)
 
 	cfg.end()
 }

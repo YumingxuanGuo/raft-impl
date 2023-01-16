@@ -386,29 +386,7 @@ func StartKVServer(servers []*labrpc.ClientEnd, me int, persister *raft.Persiste
 	// You may need initialization code here.
 	go kv.ProcessApplyMsgs()
 
-	// go kv.Restore()
-
 	return kv
-}
-
-func (kv *KVServer) Restore() {
-	DPrintf(dInfo, "kv %d: restoring...", kv.me)
-
-	for !kv.killed() {
-		kv.mu.Lock()
-
-		if kv.restored {
-			DPrintf(dInfo, "kv %d: restore finished!", kv.me)
-			kv.mu.Unlock()
-			return
-		}
-
-		kv.rf.Start(Op{Op: "RestorationBroadcast"})
-
-		kv.mu.Unlock()
-
-		time.Sleep(100 * time.Millisecond)
-	}
 }
 
 func (kv *KVServer) ProcessApplyMsgs() {
